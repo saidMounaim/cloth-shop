@@ -3,6 +3,11 @@ main {
   min-height: 80vh;
 }
 
+a {
+  color: #5a5a5a;
+  text-decoration: none;
+}
+
 /** Header Style **/
 
 header .navbar-light .navbar-brand,
