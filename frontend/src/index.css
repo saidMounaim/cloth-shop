@@ -1,0 +1,18 @@
+/** Global Style **/
+main {
+  min-height: 80vh;
+}
+
+/** Header Style **/
+
+header .navbar-light .navbar-brand,
+header .navbar-light .navbar-brand:focus,
+header .navbar-light .navbar-brand:hover {
+  color: #fff;
+}
+
+header .navbar-light .navbar-nav .nav-link,
+header .navbar-light .navbar-nav .nav-link:focus,
+header .navbar-light .navbar-nav .nav-link:hover {
+  color: #fff;
+}

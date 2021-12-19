@@ -1,11 +1,18 @@
-function App() {
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>HEADER</h1>
-      </header>
-    </div>
+    <>
+      <Header />
+
+      <main>
+        <h1>Welcome to CLOTHSHOP</h1>
+      </main>
+
+      <Footer />
+    </>
   );
-}
+};
 
 export default App;
