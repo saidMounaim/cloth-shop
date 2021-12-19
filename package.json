@@ -1,0 +1,13 @@
+{
+  "name": "cloth-shop",
+  "version": "1.0.0",
+  "description": "Online Clothing Store Full web project using the MERN stack",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Said MOUNAIM",
+  "license": "ISC"
+}
