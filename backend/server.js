@@ -10,7 +10,7 @@ app.use(cors());
 app.use(express.json());
 
 // Default Route
-app.get("/", (req, res) => {
+app.get("/api", (req, res) => {
   res.status(201).json({ success: true, message: "Welcome Cloth Shop APP" });
 });
 

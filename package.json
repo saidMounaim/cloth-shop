@@ -5,7 +5,9 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "server": "nodemon backend/server.js"
+    "server": "nodemon backend/server.js",
+    "client": "npm start --prefix frontend",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "keywords": [],
   "author": "Said MOUNAIM",
@@ -17,6 +19,7 @@
     "mongoose": "^6.1.2"
   },
   "devDependencies": {
+    "concurrently": "^6.5.1",
     "nodemon": "^2.0.15"
   }
 }
