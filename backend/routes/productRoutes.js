@@ -1,8 +1,9 @@
 import express from "express";
-import { getAl } from "../controllers/productController.js";
+import { getAll, getSingle } from "../controllers/productController.js";
 
 const router = express.Router();
 
-router.route("/").get(getAl);
+router.route("/").get(getAll);
+router.route("/:id").get(getSingle);
 
 export default router;
