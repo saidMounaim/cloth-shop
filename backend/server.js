@@ -3,6 +3,8 @@ import dotenv from "dotenv";
 import cors from "cors";
 import connectDB from "./config/db.js";
 
+import productRoutes from "./routes/productRoutes.js";
+
 const app = express();
 
 dotenv.config();
@@ -17,6 +19,9 @@ app.use(express.json());
 app.get("/api", (req, res) => {
   res.status(201).json({ success: true, message: "Welcome Cloth Shop APP" });
 });
+
+// Product Route
+app.use("/api/products", productRoutes);
 
 const PORT = process.env.PORT || 5000;
 
