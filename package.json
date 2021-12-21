@@ -7,12 +7,15 @@
   "scripts": {
     "server": "nodemon backend/server.js",
     "client": "npm start --prefix frontend",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "import:data": "node backend/seeder",
+    "import:destroy": "node backend/seeder -d"
   },
   "keywords": [],
   "author": "Said MOUNAIM",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.2",
