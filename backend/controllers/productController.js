@@ -17,7 +17,8 @@ export const getSingle = asyncHandler(async (req, res) => {
   const product = await Product.findById(req.params.id);
 
   if (!product) {
-    res.status(401).json({ message: "Product not found" });
+    res.status(401);
+    throw new Error("Product not found");
   }
 
   res.status(201).json({ success: true, data: product });
