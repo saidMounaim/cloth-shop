@@ -7,7 +7,7 @@ import Product from "../models/productModel.js";
 export const getAll = asyncHandler(async (req, res) => {
   const products = await Product.find({});
 
-  res.status(201).json({ success: true, data: products });
+  res.status(201).json({ success: true, products });
 });
 
 // @DESC Fetch single product
@@ -21,5 +21,5 @@ export const getSingle = asyncHandler(async (req, res) => {
     throw new Error("Product not found");
   }
 
-  res.status(201).json({ success: true, data: product });
+  res.status(201).json({ success: true, product });
 });
