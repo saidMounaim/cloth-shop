@@ -4,15 +4,23 @@ import {
   productListReducer,
   productDetailsReducer,
 } from "./redux/reducers/productReducers";
+import { cartReducers } from "./redux/reducers/cartReducers";
 
 const rootReducers = combineReducers({
   productList: productListReducer,
   productDetails: productDetailsReducer,
+  cart: cartReducers,
 });
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-const initialState = {};
+const cartItemsFtomStorage = localStorage.getItem("cartItems")
+  ? JSON.parse(localStorage.getItem("cartItems"))
+  : [];
+
+const initialState = {
+  cart: { cartItems: cartItemsFtomStorage },
+};
 
 const store = createStore(
   rootReducers,
