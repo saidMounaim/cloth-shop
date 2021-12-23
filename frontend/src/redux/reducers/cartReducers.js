@@ -3,7 +3,7 @@ import * as actions from "../constants/cartConstants";
 export const cartReducers = (state = { cartItems: [] }, action) => {
   switch (action.type) {
     case actions.CART_ADD_ITEM:
-      const item = actions.payload;
+      const item = action.payload;
 
       const existItem = state.cartItems.find((x) => x.product === item.product);
 

@@ -15,6 +15,7 @@ import Loading from "../components/Loading";
 import Message from "../components/Message";
 import products from "../products";
 import Rating from "../components/Rating";
+import { addToCart } from "../redux/actions/cartActions";
 
 const ProductScreen = () => {
   const [qty, setQty] = useState(1);
@@ -33,7 +34,8 @@ const ProductScreen = () => {
   }, [dispatch, params.id]);
 
   const addToCartHandler = () => {
-    navigate(`/cart/${params.id}?qty=${qty}`);
+    dispatch(addToCart(params.id, qty));
+    navigate(`/cart`);
   };
 
   return (
