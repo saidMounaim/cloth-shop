@@ -27,9 +27,12 @@ const RegisterScreen = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (confirmPassword !== password) {
-      setErr("Password do not match");
-    } else {
+    if (
+      name !== "" &&
+      password !== "" &&
+      email !== "" &&
+      confirmPassword === password
+    ) {
       dispatch(register(name, email, password));
       navigate("/");
     }
