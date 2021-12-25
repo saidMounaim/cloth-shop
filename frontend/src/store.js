@@ -5,7 +5,7 @@ import {
   productDetailsReducer,
 } from "./redux/reducers/productReducers";
 import { cartReducers } from "./redux/reducers/cartReducers";
-import { userLoginReducer } from "./redux/reducres/userReducers.js";
+import { userLoginReducer } from "./redux/reducers/userReducers";
 
 const rootReducers = combineReducers({
   productList: productListReducer,
@@ -20,8 +20,13 @@ const cartItemsFtomStorage = localStorage.getItem("cartItems")
   ? JSON.parse(localStorage.getItem("cartItems"))
   : [];
 
+const userInfoFromStorage = localStorage.getItem("userInfo")
+  ? JSON.parse(localStorage.getItem("userInfo"))
+  : null;
+
 const initialState = {
   cart: { cartItems: cartItemsFtomStorage },
+  userLogin: { userInfo: userInfoFromStorage },
 };
 
 const store = createStore(

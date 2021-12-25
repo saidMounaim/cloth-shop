@@ -7,7 +7,7 @@ export const login = (email, password) => async (dispatch) => {
 
     const config = {
       headers: {
-        "Content-Type": "applications/JSON",
+        "Content-Type": "application/json",
       },
     };
 
@@ -18,6 +18,8 @@ export const login = (email, password) => async (dispatch) => {
     );
 
     dispatch({ type: actions.USER_LOGIN_SUCCESS, payload: data.user });
+
+    localStorage.setItem("userInfo", JSON.stringify(data.user));
   } catch (error) {
     dispatch({
       type: actions.USER_LOGIN_FAIL,

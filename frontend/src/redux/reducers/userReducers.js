@@ -10,11 +10,13 @@ export const userLoginReducer = (state = {}, action) => {
     case actions.USER_LOGIN_SUCCESS:
       return {
         ...state,
+        loading: false,
         userInfo: action.payload,
       };
     case actions.USER_LOGIN_FAIL:
       return {
         ...state,
+        loading: false,
         error: action.payload,
       };
     case actions.USER_LOGOUT:
