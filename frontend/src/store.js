@@ -5,13 +5,17 @@ import {
   productDetailsReducer,
 } from "./redux/reducers/productReducers";
 import { cartReducers } from "./redux/reducers/cartReducers";
-import { userLoginReducer } from "./redux/reducers/userReducers";
+import {
+  userLoginReducer,
+  userRegisterReducer,
+} from "./redux/reducers/userReducers";
 
 const rootReducers = combineReducers({
   productList: productListReducer,
   productDetails: productDetailsReducer,
   cart: cartReducers,
   userLogin: userLoginReducer,
+  userRegister: userRegisterReducer,
 });
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
