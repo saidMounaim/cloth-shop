@@ -11,7 +11,7 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import Message from "../components/Message";
-import { addToCart } from "../redux/actions/cartActions";
+import { addToCart, removeFromCart } from "../redux/actions/cartActions";
 
 const CartScreen = () => {
   const dispatch = useDispatch();
@@ -63,7 +63,11 @@ const CartScreen = () => {
                             </option>
                           ))}
                         </FormControl>
-                        <Button className="my-3" variant="danger">
+                        <Button
+                          className="my-3"
+                          variant="danger"
+                          onClick={() => dispatch(removeFromCart(cart.product))}
+                        >
                           <i class="fas fa-trash"></i>
                         </Button>
                       </Col>
@@ -73,7 +77,7 @@ const CartScreen = () => {
               ))}
             </Col>
             <Col md={4}>
-              <Card className="p-4">
+              <Card className="p-2">
                 <ListGroup variant="flush">
                   <ListGroup.Item>
                     <h4>
@@ -90,6 +94,11 @@ const CartScreen = () => {
                         .reduce((acc, item) => acc + item.qty * item.price, 0)
                         .toFixed(2)}
                     </h5>
+                  </ListGroup.Item>
+                  <ListGroup.Item>
+                    <Button className="w-100 p-2" variant="primary">
+                      PROCEED TO CHECKOUT
+                    </Button>
                   </ListGroup.Item>
                 </ListGroup>
               </Card>
