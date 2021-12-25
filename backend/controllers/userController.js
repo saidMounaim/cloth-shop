@@ -26,3 +26,25 @@ export const authUser = asyncHandler(async (req, res) => {
     throw new Error("Invalid email or password");
   }
 });
+
+// @Desc Get user profile
+// @Route /api/users/profile
+// @Method GET
+export const getUserPofile = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user.id);
+
+  if (user) {
+    res.status(201).json({
+      success: true,
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        isAdmin: user.isAdmin,
+      },
+    });
+  } else {
+    res.status(401);
+    throw new Error("User not found");
+  }
+});
