@@ -69,3 +69,34 @@ export const register = (name, email, password) => async (dispatch) => {
     });
   }
 };
+
+export const userDetailsLoggedIn = () => async (dispatch, getState) => {
+  try {
+    dispatch({ type: actions.USER_LOGGED_IN_FAIL });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.get(
+      "http://localhost:5000/api/users/profile",
+      config
+    );
+
+    dispatch({ type: actions.USER_LOGGED_IN_SUCCESS, payload: data.user });
+  } catch (error) {
+    dispatch({
+      type: actions.USER_LOGGED_IN_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};

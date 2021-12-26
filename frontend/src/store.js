@@ -8,6 +8,7 @@ import { cartReducers } from "./redux/reducers/cartReducers";
 import {
   userLoginReducer,
   userRegisterReducer,
+  userLoggedInReducer,
 } from "./redux/reducers/userReducers";
 
 const rootReducers = combineReducers({
@@ -16,6 +17,7 @@ const rootReducers = combineReducers({
   cart: cartReducers,
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,
+  userLoggedIn: userLoggedInReducer,
 });
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
