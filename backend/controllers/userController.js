@@ -75,3 +75,33 @@ export const registerUser = asyncHandler(async (req, res) => {
     },
   });
 });
+
+// @Desc Update profile
+// @Route /api/users/profile
+// @Method PUT
+export const updateUserProfile = asyncHandler(async (req, res) => {
+  let user = await User.findById(req.user.id);
+
+  if (!user) {
+    res.status(401);
+    throw new Error("User not found");
+  }
+
+  const emailExist = await User.findOne({ email: req.body.email });
+
+  if (emailExist) {
+    res.status(401);
+    throw new Error("Already exist");
+  }
+
+  user.name = req.body.name || user.name;
+  user.email = req.body.email || user.email;
+
+  if (req.body.password) {
+    user.password = req.body.password;
+  }
+
+  const updateUserProfile = await user.save();
+
+  res.status(201).json({ success: true, user: updateUserProfile });
+});
