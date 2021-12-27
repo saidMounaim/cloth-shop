@@ -80,28 +80,34 @@ export const registerUser = asyncHandler(async (req, res) => {
 // @Route /api/users/profile
 // @Method PUT
 export const updateUserProfile = asyncHandler(async (req, res) => {
-  let user = await User.findById(req.user.id);
+  const user = await User.findById(req.user.id);
 
   if (!user) {
     res.status(401);
     throw new Error("User not found");
   }
 
-  const emailExist = await User.findOne({ email: req.body.email });
+  const updateUserProfile = await User.findByIdAndUpdate(
+    req.user.id,
+    {
+      name: req.body.name || user.name,
+      email: req.body.email || user.email,
+      password: req.body.password || user.password,
+    },
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
 
-  if (emailExist) {
-    res.status(401);
-    throw new Error("Already exist");
-  }
-
-  user.name = req.body.name || user.name;
-  user.email = req.body.email || user.email;
-
-  if (req.body.password) {
-    user.password = req.body.password;
-  }
-
-  const updateUserProfile = await user.save();
-
-  res.status(201).json({ success: true, user: updateUserProfile });
+  res.status(201).json({
+    success: true,
+    user: {
+      _id: updateUserProfile._id,
+      name: updateUserProfile.name,
+      email: updateUserProfile.email,
+      isAdmin: updateUserProfile.isAdmin,
+      token: generateToken(updateUserProfile._id),
+    },
+  });
 });

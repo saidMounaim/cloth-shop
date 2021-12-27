@@ -35,8 +35,9 @@ UserSchema.methods.matchPassword = async function (entredPassword) {
 };
 
 UserSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) next();
-
+  if (!this.isModified("password")) {
+    next();
+  }
   const salt = bcrypt.genSaltSync(10);
   const hash = bcrypt.hashSync(this.password, salt);
 

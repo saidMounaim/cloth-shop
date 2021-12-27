@@ -9,6 +9,7 @@ import {
   userLoginReducer,
   userRegisterReducer,
   userLoggedInReducer,
+  userUpdateProfileReducer,
 } from "./redux/reducers/userReducers";
 
 const rootReducers = combineReducers({
@@ -18,6 +19,7 @@ const rootReducers = combineReducers({
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,
   userLoggedIn: userLoggedInReducer,
+  userUpdateProfile: userUpdateProfileReducer,
 });
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

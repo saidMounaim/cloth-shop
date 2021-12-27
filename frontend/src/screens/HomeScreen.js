@@ -13,8 +13,6 @@ const HomeScreen = () => {
 
   const { products, loading, error } = productList;
 
-  console.log(productList);
-
   useEffect(() => {
     dispatch(listProduct());
   }, [dispatch]);
@@ -28,9 +26,9 @@ const HomeScreen = () => {
         ) : error ? (
           <Message variant="danger">{error}</Message>
         ) : (
-          products.map((product) => (
+          products.map((product, index) => (
             <Col sm={12} md={6} lg={4} xl={3}>
-              <Product product={product} />
+              <Product product={product} key={index} />
             </Col>
           ))
         )}

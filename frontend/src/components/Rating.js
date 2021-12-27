@@ -5,7 +5,7 @@ const Rating = ({ value, text }) => {
     <div className="rating">
       <span>
         <i
-          class={
+          className={
             value >= 1
               ? `fas fa-star`
               : value >= 0.5
@@ -14,7 +14,7 @@ const Rating = ({ value, text }) => {
           }
         ></i>
         <i
-          class={
+          className={
             value >= 2
               ? `fas fa-star`
               : value >= 1.5
@@ -23,7 +23,7 @@ const Rating = ({ value, text }) => {
           }
         ></i>
         <i
-          class={
+          className={
             value >= 3
               ? `fas fa-star`
               : value >= 2.5
@@ -32,7 +32,7 @@ const Rating = ({ value, text }) => {
           }
         ></i>
         <i
-          class={
+          className={
             value >= 4
               ? `fas fa-star`
               : value >= 3.5
@@ -41,7 +41,7 @@ const Rating = ({ value, text }) => {
           }
         ></i>
         <i
-          class={
+          className={
             value >= 5
               ? `fas fa-star`
               : value >= 4.5

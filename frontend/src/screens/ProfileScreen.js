@@ -5,33 +5,49 @@ import { Form, Button, Row, Col } from "react-bootstrap";
 import FormContainer from "../components/FormContainer";
 import Loading from "../components/Loading";
 import Message from "../components/Message";
-import { userDetailsLoggedIn } from "../redux/actions/userActions";
+import {
+  userDetailsLoggedIn,
+  updateProfile,
+} from "../redux/actions/userActions";
 
 const ProfileScreen = () => {
+  const [message, setMessage] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const dispatch = useDispatch();
 
-  const userLoggedIn = useSelector((state) => state.userLoggedIn);
-  const { loading, error, user } = userLoggedIn;
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
+  const userUpdateProfile = useSelector((state) => state.userUpdateProfile);
+  const { successUpdated, loading, error } = userUpdateProfile;
 
   useEffect(() => {
-    dispatch(userDetailsLoggedIn());
-    if (user?.name) {
-      setName(user.name);
-      setEmail(user.email);
+    if (userInfo?.name) {
+      setName(userInfo.name);
+      setEmail(userInfo.email);
     }
-  }, [dispatch, user]);
+  }, [dispatch, userInfo]);
 
-  const handleSubmit = () => {};
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(password);
+    if (password !== confirmPassword) {
+      setMessage("Password do not match");
+    } else {
+      dispatch(updateProfile({ id: userInfo._id, name, email, password }));
+    }
+  };
 
   return (
     <FormContainer>
       <h2>Update Profile</h2>
       <Form onSubmit={handleSubmit}>
         {error && <Message variant="danger">{error}</Message>}
+        {message && <Message variant="danger">{message}</Message>}
+        {successUpdated && <Message variant="success">Profile Updated</Message>}
         <Form.Group controlId="name" className="mt-3">
           <Form.Label>Full Name</Form.Label>
           <Form.Control
@@ -69,7 +85,7 @@ const ProfileScreen = () => {
           ></Form.Control>
         </Form.Group>
         <Button className="mt-3" type="submit" variant="primary">
-          {loading ? <Loading /> : `Update`}
+          {loading ? <Loading /> : `Update Profile`}
         </Button>
       </Form>
     </FormContainer>
