@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   ListGroup,
   Row,
@@ -9,13 +9,18 @@ import {
   Card,
 } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Message from "../components/Message";
 import { addToCart, removeFromCart } from "../redux/actions/cartActions";
 
 const CartScreen = () => {
+  let navigate = useNavigate();
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.cartItems);
+
+  const checkoutHandler = () => {
+    navigate("/shipping");
+  };
 
   return (
     <>
@@ -96,7 +101,12 @@ const CartScreen = () => {
                     </h5>
                   </ListGroup.Item>
                   <ListGroup.Item>
-                    <Button className="w-100 p-2" variant="primary">
+                    <Button
+                      className="w-100 p-2"
+                      variant="primary"
+                      disabled={cartItems.length === 0}
+                      onClick={checkoutHandler}
+                    >
                       PROCEED TO CHECKOUT
                     </Button>
                   </ListGroup.Item>

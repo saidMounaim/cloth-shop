@@ -9,6 +9,7 @@ import LoginScreen from "./screens/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import ProtectedRoute from "./components/ProtectedRoute";
+import ShippingScreen from "./screens/ShippingScreen";
 
 const App = () => {
   return (
@@ -24,6 +25,9 @@ const App = () => {
             <Route path="/register" element={<RegisterScreen />} />
             <Route path="/profile" element={<ProtectedRoute />}>
               <Route path="/profile" element={<ProfileScreen />} />
+            </Route>
+            <Route path="/shipping" element={<ProtectedRoute />}>
+              <Route path="/shipping" element={<ShippingScreen />} />
             </Route>
           </Routes>
         </Container>

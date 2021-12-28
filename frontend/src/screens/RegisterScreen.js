@@ -34,7 +34,6 @@ const RegisterScreen = () => {
       confirmPassword === password
     ) {
       dispatch(register(name, email, password));
-      navigate("/");
     }
   };
 
