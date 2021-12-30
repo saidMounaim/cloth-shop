@@ -1,7 +1,7 @@
 import * as actions from "../constants/cartConstants";
 
 export const cartReducers = (
-  state = { cartItems: [], shippingAddress: [] },
+  state = { cartItems: [], shippingAddress: [], paymentMethod: "" },
   action
 ) => {
   switch (action.type) {
@@ -34,6 +34,12 @@ export const cartReducers = (
       return {
         ...state,
         shippingAddress: action.payload,
+      };
+
+    case actions.CART_SAVE_PAYMENT_METHOD:
+      return {
+        ...state,
+        paymentMethod: action.payload,
       };
 
     default:
