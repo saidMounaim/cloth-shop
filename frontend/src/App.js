@@ -11,6 +11,7 @@ import ProfileScreen from "./screens/ProfileScreen";
 import ProtectedRoute from "./components/ProtectedRoute";
 import ShippingScreen from "./screens/ShippingScreen";
 import PaymentScreen from "./screens/PaymentScreen";
+import PlaceOrderScreen from "./screens/PlaceOrderScreen";
 
 const App = () => {
   return (
@@ -32,6 +33,9 @@ const App = () => {
             </Route>
             <Route path="/payment" element={<ProtectedRoute />}>
               <Route path="/payment" element={<PaymentScreen />} />
+            </Route>
+            <Route path="/placeorder" element={<ProtectedRoute />}>
+              <Route path="/placeorder" element={<PlaceOrderScreen />} />
             </Route>
           </Routes>
         </Container>
