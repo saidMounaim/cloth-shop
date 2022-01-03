@@ -20,6 +20,7 @@ export const addOrderItems = asyncHandler(async (req, res) => {
   }
 
   const createdOrder = await new Order({
+    user: req.user._id,
     orderItems,
     shippingAddress,
     paymentMethod,

@@ -1,12 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button, Row, Col, ListGroup, Image, Card } from "react-bootstrap";
 import Message from "../components/Message";
 import { useSelector, useDispatch } from "react-redux";
 import CheckoutSteps from "../components/CheckoutSteps";
+import { createOrder } from "../redux/actions/orderActions";
 
 const PlaceOrderScreen = () => {
+  let navigate = useNavigate();
+  const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
+
+  const { order, success, error } = useSelector((state) => state.orderCreate);
 
   const addDecimals = (num) => {
     return (Math.round(num * 100) / 100).toFixed(2);
@@ -26,8 +31,21 @@ const PlaceOrderScreen = () => {
     Number(cart.taxPrice)
   ).toFixed(2);
 
+  useEffect(() => {
+    if (success) navigate(`/order/${order._id}`);
+  }, [dispatch, success, navigate]);
+
   const placeOrderHandler = () => {
-    console.log("Order");
+    dispatch(
+      createOrder({
+        orderItems: cart.cartItems,
+        shippingAddress: cart.shippingAddress,
+        paymentMethod: cart.paymentMethod,
+        taxPrice: cart.taxPrice,
+        shippingPrice: cart.shippingPrice,
+        totalPrice: cart.totalPrice,
+      })
+    );
   };
 
   return (
@@ -36,6 +54,11 @@ const PlaceOrderScreen = () => {
       <Row>
         <Col md={8}>
           <ListGroup variant="flush">
+            {error && (
+              <ListGroup.Item>
+                <Message variant="danger">{error}</Message>
+              </ListGroup.Item>
+            )}
             <ListGroup.Item>
               <h4>Shipping</h4>
               <strong>Address:</strong>

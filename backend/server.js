@@ -6,6 +6,7 @@ import { errorHandler, notFound } from "./middlewares/errorMiddleware.js";
 
 import productRoutes from "./routes/productRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
+import orderRoutes from "./routes/orderRoutes.js";
 
 const app = express();
 
@@ -28,6 +29,10 @@ app.use("/api/products", productRoutes);
 // User Route
 app.use("/api/users", userRoutes);
 
+// Order Route
+app.use("/api/orders", orderRoutes);
+
+// Error Handling Middleware
 app.use(errorHandler);
 app.use(notFound);
 
