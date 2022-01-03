@@ -29,7 +29,7 @@ const CartScreen = () => {
       </Link>
       <Row>
         <h2 className="mb-4">Shopping Cart</h2>
-        {cartItems.length == 0 ? (
+        {cartItems.length === 0 ? (
           <Message variant="info">
             Your cart is empty <Link to="/">Go Back</Link>
           </Message>

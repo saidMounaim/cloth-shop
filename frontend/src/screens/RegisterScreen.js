@@ -23,7 +23,7 @@ const RegisterScreen = () => {
     if (userInfo) {
       navigate("/");
     }
-  }, [dispatch, userInfo]);
+  }, [dispatch, navigate, userInfo]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -34,6 +34,8 @@ const RegisterScreen = () => {
       confirmPassword === password
     ) {
       dispatch(register(name, email, password));
+    } else {
+      setErr("Password do not match");
     }
   };
 

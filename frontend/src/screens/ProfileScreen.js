@@ -1,14 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { Form, Button, Row, Col } from "react-bootstrap";
+import { Form, Button } from "react-bootstrap";
 import FormContainer from "../components/FormContainer";
 import Loading from "../components/Loading";
 import Message from "../components/Message";
-import {
-  userDetailsLoggedIn,
-  updateProfile,
-} from "../redux/actions/userActions";
+import { updateProfile } from "../redux/actions/userActions";
 
 const ProfileScreen = () => {
   const [message, setMessage] = useState("");

@@ -20,7 +20,7 @@ const LoginScreen = () => {
     if (userInfo) {
       navigate("/");
     }
-  }, [dispatch, userInfo]);
+  }, [dispatch, navigate, userInfo]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
