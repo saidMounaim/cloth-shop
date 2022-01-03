@@ -11,7 +11,10 @@ import {
   userLoggedInReducer,
   userUpdateProfileReducer,
 } from "./redux/reducers/userReducers";
-import { orderCreateReducer } from "./redux/reducers/orderReducers";
+import {
+  orderCreateReducer,
+  orderDetailsReducer,
+} from "./redux/reducers/orderReducers";
 
 const rootReducers = combineReducers({
   productList: productListReducer,
@@ -22,6 +25,7 @@ const rootReducers = combineReducers({
   userLoggedIn: userLoggedInReducer,
   userUpdateProfile: userUpdateProfileReducer,
   orderCreate: orderCreateReducer,
+  orderDetails: orderDetailsReducer,
 });
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
