@@ -16,8 +16,6 @@ export const createOrder = (dataOrder) => async (dispatch, getState) => {
       },
     };
 
-    console.log(userInfo.token);
-
     const { data } = await axios.post(
       "http://localhost:5000/api/orders",
       dataOrder,
@@ -47,7 +45,7 @@ export const getOrderDetails = (id) => async (dispatch, getState) => {
     const config = {
       headers: {
         "Content-Type": "application/json",
-        Authotrization: `Bearer ${userInfo.token}`,
+        Authorization: `Bearer ${userInfo.token}`,
       },
     };
 
