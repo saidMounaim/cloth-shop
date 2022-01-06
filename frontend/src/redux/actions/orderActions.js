@@ -99,3 +99,35 @@ export const payOrder =
       });
     }
   };
+
+export const listMyOrders = () => async (dispatch, getState) => {
+  try {
+    dispatch({ type: actions.ORDER_LIST_MY_REQUEST });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.get(
+      `http://localhost:5000/api/orders/myorders`,
+      config
+    );
+
+    dispatch({ type: actions.ORDER_LIST_MY_SUCCESS, payload: data.orders });
+  } catch (error) {
+    dispatch({
+      type: actions.ORDER_LIST_MY_FAILED,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
