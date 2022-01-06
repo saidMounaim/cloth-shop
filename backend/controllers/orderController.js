@@ -75,3 +75,12 @@ export const updateOrderToPaid = asyncHandler(async (req, res) => {
 
   res.status(201).json({ success: true, order: updatedOrder });
 });
+
+// @Desc Get my orders
+// @Route /api/orders/myorders
+// @Method GET
+export const getMyOrders = asyncHandler(async (req, res) => {
+  const orders = await Order.find({ user: req.user._id });
+
+  res.status(201).json({ success: true, orders });
+});
