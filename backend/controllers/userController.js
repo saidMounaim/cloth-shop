@@ -111,3 +111,11 @@ export const updateUserProfile = asyncHandler(async (req, res) => {
     },
   });
 });
+
+// @Desc Get users
+// @Route /api/users
+// @Route GET
+export const getUsers = asyncHandler(async (req, res) => {
+  const users = await User.find({});
+  res.status(201).json({ success: true, users });
+});
