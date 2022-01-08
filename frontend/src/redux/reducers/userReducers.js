@@ -121,6 +121,11 @@ export const usersListReducer = (state = { users: [] }, action) => {
         loading: false,
         error: action.payload,
       };
+    case actions.USER_LIST_RESET:
+      return {
+        ...state,
+        users: [],
+      };
     default:
       return state;
   }
