@@ -123,7 +123,7 @@ export const getUsers = asyncHandler(async (req, res) => {
 // @Desc Delete user
 // @Route /api/users/:id
 // @Method DELETE
-export const deleteUser = asyncHandler(async () => {
+export const deleteUser = asyncHandler(async (req, res) => {
   let user = await User.findById(req.params.id);
 
   if (!user) {

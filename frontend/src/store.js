@@ -11,6 +11,7 @@ import {
   userLoggedInReducer,
   userUpdateProfileReducer,
   usersListReducer,
+  userDeleteReducer,
 } from "./redux/reducers/userReducers";
 import {
   orderCreateReducer,
@@ -28,6 +29,7 @@ const rootReducers = combineReducers({
   userLoggedIn: userLoggedInReducer,
   userUpdateProfile: userUpdateProfileReducer,
   usersList: usersListReducer,
+  userDelete: userDeleteReducer,
   orderCreate: orderCreateReducer,
   orderDetails: orderDetailsReducer,
   orderPay: orderPayReducer,

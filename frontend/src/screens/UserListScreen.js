@@ -4,18 +4,26 @@ import { Row, Col, Table, Button } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import Loading from "../components/Loading";
 import Message from "../components/Message";
-import { listUsers } from "../redux/actions/userActions";
+import { listUsers, deleteUser } from "../redux/actions/userActions";
 
 const UserListScreen = () => {
   const dispatch = useDispatch();
 
   const usersList = useSelector((state) => state.usersList);
-
   const { users, loading, error } = usersList;
+
+  const userDelete = useSelector((state) => state.userDelete);
+  const { success: successDelete } = userDelete;
 
   useEffect(() => {
     dispatch(listUsers());
-  }, []);
+  }, [dispatch, successDelete]);
+
+  const deleteUserHandler = (id) => {
+    if (window.confirm("Are you sure ?")) {
+      dispatch(deleteUser(id));
+    }
+  };
 
   return (
     <>
@@ -64,7 +72,11 @@ const UserListScreen = () => {
                           <i className="fas fa-edit"></i>
                         </Button>
                       </LinkContainer>
-                      <Button className="btn btn-sm" variant="danger">
+                      <Button
+                        className="btn btn-sm"
+                        variant="danger"
+                        onClick={() => deleteUserHandler(user._id)}
+                      >
                         <i className="fas fa-trash"></i>
                       </Button>
                     </td>
