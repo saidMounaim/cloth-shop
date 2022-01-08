@@ -148,3 +148,23 @@ export const getUserById = asyncHandler(async (req, res) => {
 
   res.status(201).json({ success: true, user });
 });
+
+// @Desc Update user
+// @Route /api/users/:id
+// @Method PUT
+export const updateUser = asyncHandler(async (req, res) => {
+  let user = await User.findById(req.params.id);
+
+  if (user) {
+    user.name = req.body.name || user.name;
+    user.email = req.body.email || user.email;
+    user.isAdmin = req.body.isAdmin;
+
+    const updatedUser = await user.save();
+
+    res.status(201).json({ success: true, user: updatedUser });
+  } else {
+    res.status(401);
+    throw new Error("User not found");
+  }
+});
