@@ -4,7 +4,7 @@ import { Row, Col, Table, Button } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import Loading from "../components/Loading";
 import Message from "../components/Message";
-import { listProduct } from "../redux/actions/productActions";
+import { listProduct, deleteProduct } from "../redux/actions/productActions";
 
 const ProductListScreen = () => {
   const dispatch = useDispatch();
@@ -12,11 +12,23 @@ const ProductListScreen = () => {
   const productList = useSelector((state) => state.productList);
   const { products, loading, error } = productList;
 
+  const productDelete = useSelector((state) => state.productDelete);
+  const {
+    loading: loadingDelete,
+    success: successDelete,
+    error: errorDelete,
+  } = productDelete;
+
   useEffect(() => {
     dispatch(listProduct());
-  }, [dispatch]);
+    console.log(successDelete);
+  }, [dispatch, successDelete]);
 
-  const deleteProductHandler = () => {};
+  const deleteProductHandler = (id) => {
+    if (window.confirm("Are u sure ?")) {
+      dispatch(deleteProduct(id));
+    }
+  };
 
   return (
     <>
@@ -32,6 +44,7 @@ const ProductListScreen = () => {
           </LinkContainer>
         </Col>
       </Row>
+      {errorDelete && <Message variant="danger">{errorDelete}</Message>}
       {loading ? (
         <Loading />
       ) : error ? (
@@ -39,43 +52,47 @@ const ProductListScreen = () => {
       ) : (
         <Row>
           <Col>
-            <Table striped rounded="true" hover className="table-sm">
-              <thead>
-                <tr>
-                  <td>ID</td>
-                  <td>Name</td>
-                  <td>Category</td>
-                  <td>Brand</td>
-                </tr>
-              </thead>
-              <tbody>
-                {products.map((product, index) => (
-                  <tr key={index}>
-                    <td>{product._id}</td>
-                    <td>{product.name}</td>
-                    <td>{product.category}</td>
-                    <td>{product.brand}</td>
-                    <td>
-                      <LinkContainer
-                        className="ml-1"
-                        to={`/admin/product/edit/${product._id}`}
-                      >
-                        <Button className="btn btn-sm" variant="primary">
-                          <i className="fas fa-edit"></i>
-                        </Button>
-                      </LinkContainer>
-                      <Button
-                        className="btn btn-sm"
-                        variant="danger"
-                        onClick={() => deleteProductHandler(product._id)}
-                      >
-                        <i className="fas fa-trash"></i>
-                      </Button>
-                    </td>
+            {loadingDelete ? (
+              <Loading />
+            ) : (
+              <Table striped rounded="true" hover className="table-sm">
+                <thead>
+                  <tr>
+                    <td>ID</td>
+                    <td>Name</td>
+                    <td>Category</td>
+                    <td>Brand</td>
                   </tr>
-                ))}
-              </tbody>
-            </Table>
+                </thead>
+                <tbody>
+                  {products.map((product, index) => (
+                    <tr key={index}>
+                      <td>{product._id}</td>
+                      <td>{product.name}</td>
+                      <td>{product.category}</td>
+                      <td>{product.brand}</td>
+                      <td>
+                        <LinkContainer
+                          className="ml-1"
+                          to={`/admin/product/edit/${product._id}`}
+                        >
+                          <Button className="btn btn-sm" variant="primary">
+                            <i className="fas fa-edit"></i>
+                          </Button>
+                        </LinkContainer>
+                        <Button
+                          className="btn btn-sm"
+                          variant="danger"
+                          onClick={() => deleteProductHandler(product._id)}
+                        >
+                          <i className="fas fa-trash"></i>
+                        </Button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            )}
           </Col>
         </Row>
       )}
