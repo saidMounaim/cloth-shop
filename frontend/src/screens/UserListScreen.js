@@ -35,7 +35,7 @@ const UserListScreen = () => {
         <Row>
           <h3>Users List</h3>
           <Col>
-            <Table striped rounded hover className="table-sm">
+            <Table striped rounded="true" hover className="table-sm">
               <thead>
                 <tr>
                   <td>ID</td>
