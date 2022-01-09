@@ -1,9 +1,14 @@
 import express from "express";
-import { getAll, getSingle } from "../controllers/productController.js";
+import {
+  getAll,
+  getSingle,
+  deleteProduct,
+} from "../controllers/productController.js";
+import { protect, admin } from "../controllers/productController.js";
 
 const router = express.Router();
 
 router.route("/").get(getAll);
-router.route("/:id").get(getSingle);
+router.route("/:id").get(getSingle).delete(protect, admin, deleteProduct);
 
 export default router;

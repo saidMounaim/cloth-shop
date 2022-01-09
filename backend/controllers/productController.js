@@ -23,3 +23,19 @@ export const getSingle = asyncHandler(async (req, res) => {
 
   res.status(201).json({ success: true, product });
 });
+
+// @Desc Delete product
+// @Route /api/products/:id
+// @Method DELETE
+export const deleteProduct = asyncHandler(async (req, res) => {
+  let product = await Product.findById(req.params.id);
+
+  if (!product) {
+    res.status(401);
+    throw new Error("Product not found");
+  }
+
+  await Product.findOneAndDelete(req.params.id);
+
+  res.status(201).json({ message: "Product deleted" });
+});
