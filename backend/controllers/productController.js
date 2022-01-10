@@ -24,6 +24,27 @@ export const getSingle = asyncHandler(async (req, res) => {
   res.status(201).json({ success: true, product });
 });
 
+// @Desc Create product
+// @Route /api/products
+// @Method POST
+export const createProduct = asyncHandler(async (req, res) => {
+  const product = new Product({
+    name: req.body.name,
+    description: req.body.description,
+    price: req.body.price,
+    brand: req.body.brand,
+    category: req.body.category,
+    countInStock: req.body.countInStock,
+    numReviews: 0,
+    image: req.body.image || "/images/simple.jpg",
+    user: req.user._id,
+  });
+
+  await product.save();
+
+  res.status(201).json({ success: true, product });
+});
+
 // @Desc Delete product
 // @Route /api/products/:id
 // @Method DELETE
