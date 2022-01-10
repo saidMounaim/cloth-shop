@@ -58,12 +58,16 @@ export const deleteProduct = (id) => async (dispatch, getState) => {
 
     dispatch({ type: actions.PRODUCT_DELETE_SUCCESS });
   } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    if (message === "not authorized, no token") {
+      dispatch(logout());
+    }
     dispatch({
       type: actions.PRODUCT_DELETE_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
+      payload: message,
     });
   }
 };
