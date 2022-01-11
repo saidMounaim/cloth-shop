@@ -3,6 +3,7 @@ import thunk from "redux-thunk";
 import {
   productListReducer,
   productDetailsReducer,
+  productCreateReducer,
   productDeleteReducer,
 } from "./redux/reducers/productReducers";
 import { cartReducers } from "./redux/reducers/cartReducers";
@@ -26,6 +27,7 @@ import {
 const rootReducers = combineReducers({
   productList: productListReducer,
   productDetails: productDetailsReducer,
+  productCreate: productCreateReducer,
   productDelete: productDeleteReducer,
   cart: cartReducers,
   userLogin: userLoginReducer,

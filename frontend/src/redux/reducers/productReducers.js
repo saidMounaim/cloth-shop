@@ -74,3 +74,27 @@ export const productDeleteReducer = (state = {}, action) => {
       return state;
   }
 };
+
+export const productCreateReducer = (state = {}, action) => {
+  switch (action.type) {
+    case actions.PRODUCT_CREATE_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case actions.PRODUCT_CREATE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        product: action.payload,
+      };
+    case actions.PRODUCT_CREATE_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    default:
+      return state;
+  }
+};
