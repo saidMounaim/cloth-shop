@@ -86,7 +86,7 @@ export const productCreateReducer = (state = {}, action) => {
       return {
         ...state,
         loading: false,
-        product: action.payload,
+        success: true,
       };
     case actions.PRODUCT_CREATE_FAIL:
       return {

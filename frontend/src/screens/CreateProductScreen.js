@@ -1,11 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
 import Message from "../components/Message";
 import Loading from "../components/Loading";
 import FormContainer from "../components/FormContainer";
+import { createProduct } from "../redux/actions/productActions";
 
 const CreateProductScreen = () => {
+  const dispatch = useDispatch();
+  let navigate = useNavigate();
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [brand, setBrand] = useState("");
@@ -13,11 +17,21 @@ const CreateProductScreen = () => {
   const [price, setPrice] = useState(0);
   const [countInStock, setCountInStock] = useState(0);
 
-  const { loading, error } = useSelector((state) => state.productCreate);
+  const { loading, success, error } = useSelector(
+    (state) => state.productCreate
+  );
+
+  useEffect(() => {
+    if (success) {
+      navigate("/admin/products");
+    }
+  }, [dispatch, success]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("object");
+    dispatch(
+      createProduct({ name, description, brand, category, price, countInStock })
+    );
   };
 
   return (
