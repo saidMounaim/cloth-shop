@@ -5,7 +5,10 @@ import { Form, Button } from "react-bootstrap";
 import Message from "../components/Message";
 import Loading from "../components/Loading";
 import FormContainer from "../components/FormContainer";
-import { listProductDetails } from "../redux/actions/productActions";
+import {
+  listProductDetails,
+  updateProduct,
+} from "../redux/actions/productActions";
 
 const EditProductScreen = () => {
   const dispatch = useDispatch();
@@ -23,86 +26,114 @@ const EditProductScreen = () => {
     (state) => state.productDetails
   );
 
+  const {
+    loading: loadingUpdate,
+    success: successUpdate,
+    error: errorUpdate,
+  } = useSelector((state) => state.productUpdate);
+
   useEffect(() => {
-    if (!product || product._id !== productID) {
-      dispatch(listProductDetails(productID));
+    if (successUpdate) {
+      navigate("/admin/products");
     } else {
-      setName(product.name);
-      setDescription(product.description);
-      setBrand(product.brand);
-      setCategory(product.category);
-      setPrice(product.price);
-      setCountInStock(product.countInStock);
+      if (!product || product._id !== productID) {
+        dispatch(listProductDetails(productID));
+      } else {
+        setName(product.name);
+        setDescription(product.description);
+        setBrand(product.brand);
+        setCategory(product.category);
+        setPrice(product.price);
+        setCountInStock(product.countInStock);
+      }
     }
-  }, [dispatch, product, productID]);
+  }, [dispatch, product, productID, successUpdate]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    dispatch(
+      updateProduct({
+        _id: productID,
+        name,
+        description,
+        brand,
+        category,
+        price,
+        countInStock,
+        numReviews: 0,
+      })
+    );
   };
 
   return (
     <FormContainer>
       <h2>Edit Product</h2>
-      <Form onSubmit={handleSubmit}>
-        {error && <Message variant="danger">{error}</Message>}
-        <Form.Group controlId="name" className="mt-3">
-          <Form.Label>Name</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          ></Form.Control>
-        </Form.Group>
-        <Form.Group controlId="email" className="mt-3">
-          <Form.Label>Description</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          ></Form.Control>
-        </Form.Group>
-        <Form.Group controlId="brand" className="mt-3">
-          <Form.Label>Brand</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Brand"
-            value={brand}
-            onChange={(e) => setBrand(e.target.value)}
-          ></Form.Control>
-        </Form.Group>
-        <Form.Group controlId="category" className="mt-3">
-          <Form.Label>Category</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Category"
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-          ></Form.Control>
-        </Form.Group>
-        <Form.Group controlId="price" className="mt-3">
-          <Form.Label>Price</Form.Label>
-          <Form.Control
-            type="number"
-            placeholder="Price"
-            value={price}
-            onChange={(e) => setPrice(e.target.value)}
-          ></Form.Control>
-        </Form.Group>
-        <Form.Group controlId="countInStock" className="mt-3">
-          <Form.Label>Count In Stock</Form.Label>
-          <Form.Control
-            type="number"
-            placeholder="Count In Stock"
-            value={countInStock}
-            onChange={(e) => setCountInStock(e.target.value)}
-          ></Form.Control>
-        </Form.Group>
-        <Button className="mt-3" type="submit" variant="primary">
-          {loading ? <Loading /> : `Add`}
-        </Button>
-      </Form>
+      {errorUpdate && <Message variant="danger">{errorUpdate}</Message>}
+      {loading ? (
+        <Loading />
+      ) : error ? (
+        <Message variant="danger">{error}</Message>
+      ) : (
+        <Form onSubmit={handleSubmit}>
+          <Form.Group controlId="name" className="mt-3">
+            <Form.Label>Name</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            ></Form.Control>
+          </Form.Group>
+          <Form.Group controlId="email" className="mt-3">
+            <Form.Label>Description</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            ></Form.Control>
+          </Form.Group>
+          <Form.Group controlId="brand" className="mt-3">
+            <Form.Label>Brand</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Brand"
+              value={brand}
+              onChange={(e) => setBrand(e.target.value)}
+            ></Form.Control>
+          </Form.Group>
+          <Form.Group controlId="category" className="mt-3">
+            <Form.Label>Category</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Category"
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+            ></Form.Control>
+          </Form.Group>
+          <Form.Group controlId="price" className="mt-3">
+            <Form.Label>Price</Form.Label>
+            <Form.Control
+              type="number"
+              placeholder="Price"
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
+            ></Form.Control>
+          </Form.Group>
+          <Form.Group controlId="countInStock" className="mt-3">
+            <Form.Label>Count In Stock</Form.Label>
+            <Form.Control
+              type="number"
+              placeholder="Count In Stock"
+              value={countInStock}
+              onChange={(e) => setCountInStock(e.target.value)}
+            ></Form.Control>
+          </Form.Group>
+          <Button className="mt-3" type="submit" variant="primary">
+            {loadingUpdate ? <Loading /> : `Edit`}
+          </Button>
+        </Form>
+      )}
     </FormContainer>
   );
 };

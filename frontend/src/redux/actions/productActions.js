@@ -105,3 +105,41 @@ export const createProduct = (dataProduct) => async (dispatch, getState) => {
     });
   }
 };
+
+export const updateProduct = (dataProduct) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: actions.PRODUCT_UPDATE_REQUEST });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    await axios.put(
+      `http://localhost:5000/api/products/${dataProduct._id}`,
+      dataProduct,
+      config
+    );
+
+    dispatch({ type: actions.PRODUCT_UPDATE_SUCCESS });
+    dispatch({ type: actions.PRODUCT_UPDATE_RESET });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    if (message === "not authorized, no token") {
+      dispatch(logout());
+    }
+    dispatch({
+      type: actions.PRODUCT_UPDATE_FAIL,
+      payload: message,
+    });
+  }
+};
