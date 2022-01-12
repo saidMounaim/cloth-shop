@@ -21,7 +21,6 @@ const ProductListScreen = () => {
 
   useEffect(() => {
     dispatch(listProduct());
-    console.log(successDelete);
   }, [dispatch, successDelete]);
 
   const deleteProductHandler = (id) => {

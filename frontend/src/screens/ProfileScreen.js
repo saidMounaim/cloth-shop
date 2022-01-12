@@ -28,8 +28,6 @@ const ProfileScreen = () => {
     error: errorMyOrders,
   } = orderListMy;
 
-  console.log(orders);
-
   useEffect(() => {
     if (userInfo?.name) {
       setName(userInfo.name);
@@ -40,7 +38,6 @@ const ProfileScreen = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(password);
     if (password !== confirmPassword) {
       setMessage("Password do not match");
     } else {
