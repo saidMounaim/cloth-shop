@@ -1,12 +1,14 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
+import path from "path";
 import connectDB from "./config/db.js";
 import { errorHandler, notFound } from "./middlewares/errorMiddleware.js";
 
 import productRoutes from "./routes/productRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
+import uploadRoutes from "./routes/uploadRoutes.js";
 
 const app = express();
 
@@ -17,6 +19,9 @@ connectDB();
 
 app.use(cors());
 app.use(express.json());
+
+const __dirname = path.resolve();
+app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
 
 // Default Route
 app.get("/api", (req, res) => {
@@ -31,6 +36,9 @@ app.use("/api/users", userRoutes);
 
 // Order Route
 app.use("/api/orders", orderRoutes);
+
+// Upload Route
+app.use("/api/upload", uploadRoutes);
 
 app.get("/api/config/paypal", (req, res) => {
   res.status(201).send(process.env.PAYPAL_CLIENT_ID);
