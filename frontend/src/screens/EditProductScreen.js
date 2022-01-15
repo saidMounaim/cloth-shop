@@ -9,6 +9,7 @@ import {
   listProductDetails,
   updateProduct,
 } from "../redux/actions/productActions";
+import axios from "axios";
 
 const EditProductScreen = () => {
   const dispatch = useDispatch();
@@ -21,6 +22,8 @@ const EditProductScreen = () => {
   const [category, setCategory] = useState("");
   const [price, setPrice] = useState(0);
   const [countInStock, setCountInStock] = useState(0);
+  const [image, setImage] = useState("");
+  const [uploading, setUploading] = useState(false);
 
   const { product, loading, error } = useSelector(
     (state) => state.productDetails
@@ -45,6 +48,7 @@ const EditProductScreen = () => {
         setCategory(product.category);
         setPrice(product.price);
         setCountInStock(product.countInStock);
+        setImage(product.image);
       }
     }
   }, [dispatch, product, productID, successUpdate]);
@@ -60,9 +64,35 @@ const EditProductScreen = () => {
         category,
         price,
         countInStock,
+        image,
         numReviews: 0,
       })
     );
+  };
+
+  const uploadFileHandler = async (e) => {
+    const file = e.target.files[0];
+
+    const formData = new FormData();
+
+    formData.append("image", file);
+
+    setUploading(true);
+
+    try {
+      const config = {
+        headers: {
+          "Content-type": "multipart/form-data",
+        },
+      };
+
+      const { data } = await axios.post("/api/upload", formData, config);
+      setImage(data);
+      setUploading(false);
+    } catch (error) {
+      console.log(error.message);
+      setUploading(false);
+    }
   };
 
   return (
@@ -128,6 +158,15 @@ const EditProductScreen = () => {
               value={countInStock}
               onChange={(e) => setCountInStock(e.target.value)}
             ></Form.Control>
+          </Form.Group>
+          <Form.Group controlId="image" className="mt-3">
+            <Form.Label>Image</Form.Label>
+            <Form.Control
+              type="file"
+              label="Choose file"
+              onChange={uploadFileHandler}
+            ></Form.Control>
+            {uploading && <Loading />}
           </Form.Group>
           <Button className="mt-3" type="submit" variant="primary">
             {loadingUpdate ? <Loading /> : `Edit`}
