@@ -84,3 +84,11 @@ export const getMyOrders = asyncHandler(async (req, res) => {
 
   res.status(201).json({ success: true, orders });
 });
+
+// @Desc Get all orders
+// @Route /api/orders
+// @Method GET
+export const getOrders = asyncHandler(async (req, res) => {
+  const orders = await Order.find({}).populate("user", "id name");
+  res.status(201).json({ success: true, orders });
+});
