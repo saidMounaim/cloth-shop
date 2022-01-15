@@ -6,6 +6,7 @@ import Message from "../components/Message";
 import Loading from "../components/Loading";
 import FormContainer from "../components/FormContainer";
 import { createProduct } from "../redux/actions/productActions";
+import axios from "axios";
 
 const CreateProductScreen = () => {
   const dispatch = useDispatch();
@@ -16,6 +17,8 @@ const CreateProductScreen = () => {
   const [category, setCategory] = useState("");
   const [price, setPrice] = useState(0);
   const [countInStock, setCountInStock] = useState(0);
+  const [image, setImage] = useState("");
+  const [uploading, setUploading] = useState(false);
 
   const { loading, success, error } = useSelector(
     (state) => state.productCreate
@@ -30,8 +33,41 @@ const CreateProductScreen = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(
-      createProduct({ name, description, brand, category, price, countInStock })
+      createProduct({
+        name,
+        description,
+        brand,
+        category,
+        price,
+        countInStock,
+        image,
+      })
     );
+  };
+
+  const uploadFileHandler = async (e) => {
+    const file = e.target.files[0];
+
+    const formData = new FormData();
+
+    formData.append("image", file);
+
+    setUploading(true);
+
+    try {
+      const config = {
+        headers: {
+          "Content-type": "multipart/form-data",
+        },
+      };
+
+      const { data } = await axios.post("/api/upload", formData, config);
+      setImage(data);
+      setUploading(false);
+    } catch (error) {
+      console.log(error.message);
+      setUploading(false);
+    }
   };
 
   return (
@@ -93,6 +129,16 @@ const CreateProductScreen = () => {
             onChange={(e) => setCountInStock(e.target.value)}
           ></Form.Control>
         </Form.Group>
+        <Form.Group controlId="image" className="mt-3">
+          <Form.Label>Image</Form.Label>
+          <Form.Control
+            type="file"
+            label="Choose file"
+            onChange={uploadFileHandler}
+          ></Form.Control>
+          {uploading && <Loading />}
+        </Form.Group>
+
         <Button className="mt-3" type="submit" variant="primary">
           {loading ? <Loading /> : `Add`}
         </Button>
