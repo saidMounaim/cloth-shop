@@ -24,6 +24,7 @@ import {
   orderPayReducer,
   orderListMyOrderReducer,
   orderListOrderReducer,
+  orderDeliverReducer,
 } from "./redux/reducers/orderReducers";
 
 const rootReducers = combineReducers({
@@ -46,6 +47,7 @@ const rootReducers = combineReducers({
   orderPay: orderPayReducer,
   orderListMy: orderListMyOrderReducer,
   orderListOrder: orderListOrderReducer,
+  orderDeliver: orderDeliverReducer,
 });
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

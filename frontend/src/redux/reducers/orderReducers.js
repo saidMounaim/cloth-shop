@@ -79,6 +79,32 @@ export const orderPayReducer = (state = {}, action) => {
   }
 };
 
+export const orderDeliverReducer = (state = {}, action) => {
+  switch (action.type) {
+    case actions.ORDER_DELIVER_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case actions.ORDER_DELIVER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        success: true,
+      };
+    case actions.ORDER_DELIVER_FAILED:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    case actions.ORDER_DELIVER_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
 export const orderListMyOrderReducer = (state = { orders: [] }, action) => {
   switch (action.type) {
     case actions.ORDER_LIST_MY_REQUEST:

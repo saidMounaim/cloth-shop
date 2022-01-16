@@ -2,12 +2,16 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { PayPalButton } from "react-paypal-button-v2";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { Row, Col, ListGroup, Image, Card } from "react-bootstrap";
+import { Row, Col, ListGroup, Image, Card, Button } from "react-bootstrap";
 import Loading from "../components/Loading";
 import Message from "../components/Message";
 import { useSelector, useDispatch } from "react-redux";
 import CheckoutSteps from "../components/CheckoutSteps";
-import { getOrderDetails, payOrder } from "../redux/actions/orderActions";
+import {
+  getOrderDetails,
+  payOrder,
+  deliverOrder,
+} from "../redux/actions/orderActions";
 
 const OrderScreen = () => {
   let params = useParams();
@@ -18,9 +22,18 @@ const OrderScreen = () => {
 
   const { order, loading, error } = useSelector((state) => state.orderDetails);
 
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
   const { loading: loadingPay, success: successPay } = useSelector(
     (state) => state.orderPay
   );
+
+  const {
+    loading: loadingDeliverd,
+    error: errorDeliverd,
+    success: successDeliverd,
+  } = useSelector((state) => state.orderDeliver);
 
   if (!loading) {
     const addDecimals = (num) => {
@@ -54,10 +67,14 @@ const OrderScreen = () => {
       }
     }
     dispatch(getOrderDetails(params.id));
-  }, [dispatch, successPay, params.id]);
+  }, [dispatch, successPay, params.id, successDeliverd]);
 
   const successPaymentHandler = (paymentResult) => {
     dispatch(payOrder(params.id, paymentResult));
+  };
+
+  const deliverHandler = () => {
+    dispatch(deliverOrder(params.id));
   };
 
   return (
@@ -91,9 +108,9 @@ const OrderScreen = () => {
                     {order.shippingAddress.postalCode},{" "}
                     {order.shippingAddress.country}
                   </p>
-                  {order.isDelivred ? (
+                  {order.isDelivered ? (
                     <Message variant="success">
-                      Delivered on ${order.deliveredAt}
+                      Delivered on {order.deliveredAt.substring(0, 10)}
                     </Message>
                   ) : (
                     <Message variant="danger">Not Delivered</Message>
@@ -187,6 +204,24 @@ const OrderScreen = () => {
                             />
                           )}
                         </ListGroup.Item>
+                      )}
+                      {loadingDeliverd ? (
+                        <Loading />
+                      ) : (
+                        userInfo.isAdmin &&
+                        order.isPaid &&
+                        !order.isDelivered && (
+                          <Button
+                            onClick={deliverHandler}
+                            className="w-100"
+                            variant="primary"
+                          >
+                            Mark as deliverd
+                          </Button>
+                        )
+                      )}
+                      {errorDeliverd && (
+                        <Message variant="danger">{errorDeliverd}</Message>
                       )}
                     </ListGroup.Item>
                   </ListGroup.Item>
