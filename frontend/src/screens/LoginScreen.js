@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import FormContainer from "../components/FormContainer";
@@ -10,15 +10,18 @@ import Message from "../components/Message";
 const LoginScreen = () => {
   let navigate = useNavigate();
   const dispatch = useDispatch();
+  let location = useLocation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const userLogin = useSelector((state) => state.userLogin);
   const { loading, userInfo, error } = userLogin;
 
+  const redirect = location.search ? location.search.split("=")[1] : "";
+
   useEffect(() => {
     if (userInfo) {
-      navigate("/");
+      navigate(`/${redirect}`);
     }
   }, [dispatch, navigate, userInfo]);
 

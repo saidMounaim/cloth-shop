@@ -46,6 +46,8 @@ export const productDetailsReducer = (
         loading: false,
         error: action.payload,
       };
+    case actions.PRODUCT_DETAILS_RESET:
+      return {};
     default:
       return state;
   }

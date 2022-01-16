@@ -22,6 +22,7 @@ export const listProduct = () => async (dispatch) => {
 
 export const listProductDetails = (id) => async (dispatch) => {
   try {
+    dispatch({ type: actions.PRODUCT_DETAILS_RESET });
     dispatch({ type: actions.PRODUCT_DETAILS_REQUEST });
 
     const { data } = await axios.get(
