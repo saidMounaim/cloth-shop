@@ -139,9 +139,9 @@ export const deliverOrder = (orderId) => async (dispatch, getState) => {
       error.response && error.response.data.message
         ? error.response.data.message
         : error.message;
-    // if (message === "not authorized, no token") {
-    //   dispatch(logout());
-    // }
+    if (message === "not authorized, no token") {
+      dispatch(logout());
+    }
     dispatch({
       type: actions.ORDER_DELIVER_FAILED,
       payload: message,
