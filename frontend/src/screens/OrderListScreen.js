@@ -55,8 +55,8 @@ const OrderListScreen = () => {
                       )}
                     </td>
                     <td>
-                      {order.isDeliverd ? (
-                        order.deliverdAt.substring(0, 10)
+                      {order.isDelivered ? (
+                        order.deliveredAt.substring(0, 10)
                       ) : (
                         <i
                           className="fas fa-times"
