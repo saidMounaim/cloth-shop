@@ -11,7 +11,9 @@ export const productListReducer = (state = { products: [] }, action) => {
       return {
         ...state,
         loading: false,
-        products: action.payload,
+        products: action.payload.products,
+        pages: action.payload.pages,
+        page: action.payload.page,
       };
     case actions.PRODUCT_LIST_FAIL:
       return {

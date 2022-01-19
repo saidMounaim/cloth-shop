@@ -58,6 +58,10 @@ const App = () => {
             </Route>
             <Route path="/admin/products" element={<OnlyAdmin />}>
               <Route path="/admin/products" element={<ProductListScreen />} />
+              <Route
+                path="/admin/products/:pageNumber"
+                element={<ProductListScreen />}
+              />
             </Route>
             <Route path="/admin/products/create" element={<OnlyAdmin />}>
               <Route
@@ -74,6 +78,11 @@ const App = () => {
             <Route path="/admin/orders" element={<OnlyAdmin />}>
               <Route path="/admin/orders" element={<OrderListScreen />} />
             </Route>
+            <Route path="/page/:pageNumber" element={<HomeScreen />} />
+            <Route
+              path="/search/:keyword/page/:pageNumber"
+              element={<HomeScreen />}
+            />
             <Route path="/search/:keyword" element={<HomeScreen />} />
             <Route index path="/" element={<HomeScreen />} />
           </Routes>

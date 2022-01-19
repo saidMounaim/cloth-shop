@@ -3,16 +3,16 @@ import axios from "axios";
 import { logout } from "./userActions";
 
 export const listProduct =
-  (keyword = "") =>
+  (keyword = "", pageNumber = "") =>
   async (dispatch) => {
     try {
       dispatch({ type: actions.PRODUCT_LIST_REQUEST });
 
       const { data } = await axios.get(
-        `http://localhost:5000/api/products?keyword=${keyword}`
+        `http://localhost:5000/api/products?keyword=${keyword}&pageNumber=${pageNumber}`
       );
 
-      dispatch({ type: actions.PRODUCT_LIST_SUCCESS, payload: data.products });
+      dispatch({ type: actions.PRODUCT_LIST_SUCCESS, payload: data });
     } catch (error) {
       dispatch({
         type: actions.PRODUCT_LIST_FAIL,

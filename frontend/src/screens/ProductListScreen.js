@@ -1,16 +1,20 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Row, Col, Table, Button } from "react-bootstrap";
+import { useParams } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
 import Loading from "../components/Loading";
 import Message from "../components/Message";
+import Paginate from "../components/Paginate";
 import { listProduct, deleteProduct } from "../redux/actions/productActions";
 
 const ProductListScreen = () => {
+  let params = useParams();
+  const pageNumber = params.pageNumber;
   const dispatch = useDispatch();
 
   const productList = useSelector((state) => state.productList);
-  const { products, loading, error } = productList;
+  const { products, loading, error, page, pages } = productList;
 
   const productDelete = useSelector((state) => state.productDelete);
   const {
@@ -20,8 +24,8 @@ const ProductListScreen = () => {
   } = productDelete;
 
   useEffect(() => {
-    dispatch(listProduct());
-  }, [dispatch, successDelete]);
+    dispatch(listProduct("", pageNumber));
+  }, [dispatch, successDelete, pageNumber]);
 
   const deleteProductHandler = (id) => {
     if (window.confirm("Are u sure ?")) {
@@ -95,6 +99,7 @@ const ProductListScreen = () => {
           </Col>
         </Row>
       )}
+      <Paginate page={page} pages={pages} isAdmin={true} />
     </>
   );
 };
