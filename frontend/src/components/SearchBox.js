@@ -7,22 +7,24 @@ const SearchBox = () => {
   const [keyword, setKeyword] = useState("");
 
   const submitHandler = (e) => {
-    e.perventDefault();
-    if (keyword !== "") {
+    e.preventDefault();
+    if (keyword.trim()) {
       navigate(`/search/${keyword}`);
+    } else {
+      navigate("/");
     }
   };
 
   return (
-    <Form onSubmit={submitHandler} inline>
+    <Form onSubmit={submitHandler} className="d-flex">
       <Form.Control
         type="text"
-        name="q"
+        name="keyword"
         placeholder="Search products ..."
         onChange={(e) => setKeyword(e.target.value)}
         className="mr-sm-2 ml-sm-5"
       ></Form.Control>
-      <Button variant="primary" type="submit" className="p-2">
+      <Button variant="info" type="submit" className="p-2">
         Search
       </Button>
     </Form>

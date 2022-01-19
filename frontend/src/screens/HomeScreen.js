@@ -1,12 +1,15 @@
 import React, { useEffect } from "react";
 import { listProduct } from "../redux/actions/productActions";
 import { useSelector, useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
 import Product from "../components/Product";
 import { Row, Col } from "react-bootstrap";
 import Loading from "../components/Loading";
 import Message from "../components/Message";
 
 const HomeScreen = () => {
+  let params = useParams();
+  const keyword = params.keyword;
   const dispatch = useDispatch();
 
   const productList = useSelector((state) => state.productList);
@@ -14,12 +17,12 @@ const HomeScreen = () => {
   const { products, loading, error } = productList;
 
   useEffect(() => {
-    dispatch(listProduct());
-  }, [dispatch]);
+    dispatch(listProduct(keyword));
+  }, [dispatch, keyword]);
 
   return (
     <>
-      <h3>Best Products</h3>
+      <h3>Latest Products</h3>
       <Row>
         {loading ? (
           <Loading />
