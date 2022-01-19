@@ -28,7 +28,6 @@ const App = () => {
       <main className="py-4">
         <Container>
           <Routes>
-            <Route index path="/" element={<HomeScreen />} />
             <Route path="/product/:id" element={<ProductScreen />} />
             <Route path="/cart" element={<CartScreen />} />
             <Route path="/login" element={<LoginScreen />} />
@@ -75,6 +74,8 @@ const App = () => {
             <Route path="/admin/orders" element={<OnlyAdmin />}>
               <Route path="/admin/orders" element={<OrderListScreen />} />
             </Route>
+            <Route path="/search/:keyword" element={<HomeScreen />} />
+            <Route index path="/" element={<HomeScreen />} />
           </Routes>
         </Container>
       </main>

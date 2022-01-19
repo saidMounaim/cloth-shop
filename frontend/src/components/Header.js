@@ -22,6 +22,7 @@ const Header = () => {
             <Navbar.Brand>CLOTHSHOP</Navbar.Brand>
           </LinkContainer>
           <Nav className="ml-auto">
+            <SearchBox />
             <LinkContainer to="/cart">
               <Nav.Link>
                 <i className="fas fa-shopping-cart"></i> Cart
