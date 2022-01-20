@@ -147,3 +147,12 @@ export const deleteProduct = asyncHandler(async (req, res) => {
 
   res.status(201).json({ message: "Product deleted" });
 });
+
+// @Desc Get top products
+// @Route /api/products/top
+// @Method GET
+export const getTopProducts = asyncHandler(async (req, res) => {
+  const products = await Product.find({}).sort({ rating: -1 }).limit(3);
+
+  res.status(201).json({ success: true, products });
+});
