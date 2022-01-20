@@ -6,7 +6,9 @@ import Product from "../components/Product";
 import { Row, Col } from "react-bootstrap";
 import Loading from "../components/Loading";
 import Message from "../components/Message";
+import Meta from "../components/Meta";
 import Paginate from "../components/Paginate";
+import ProductCarousel from "../components/ProductCarousel";
 
 const HomeScreen = () => {
   let params = useParams();
@@ -24,6 +26,8 @@ const HomeScreen = () => {
 
   return (
     <>
+      <Meta title="Clothshop | Home" />
+      {/* {!keyword && <ProductCarousel />} */}
       <h3>Latest Products</h3>
       <Row>
         {loading ? (

@@ -11,6 +11,7 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import Message from "../components/Message";
+import Meta from "../components/Meta";
 import { addToCart, removeFromCart } from "../redux/actions/cartActions";
 
 const CartScreen = () => {
@@ -24,6 +25,7 @@ const CartScreen = () => {
 
   return (
     <>
+      <Meta title="Clothshop | Cart" />
       <Link className="btn btn-light my-3" to="/">
         Go Home
       </Link>
