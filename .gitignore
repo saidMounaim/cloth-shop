@@ -7,10 +7,10 @@
 .pnp.js
 
 # testing
-//frontend/coverage
+/frontend/coverage
 
 # production
-//frontend/build
+/frontend/build
 
 # misc
 .env
