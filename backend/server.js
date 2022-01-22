@@ -21,25 +21,9 @@ connectDB();
 app.use(cors());
 app.use(express.json());
 
-const __dirname = path.resolve();
-
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "/frontend/build")));
-  app.use("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"));
-  });
-} else {
-  // Default Route
-  app.get("/api", (req, res) => {
-    res.status(201).json({ success: true, message: "Welcome Cloth Shop APP" });
-  });
-}
-
 if (process.env.NODE_ENV === "developement") {
   app.use(morgan("dev"));
 }
-
-app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
 
 // Product Route
 app.use("/api/products", productRoutes);
@@ -56,6 +40,21 @@ app.use("/api/upload", uploadRoutes);
 app.get("/api/config/paypal", (req, res) => {
   res.status(201).send(process.env.PAYPAL_CLIENT_ID);
 });
+
+const __dirname = path.resolve();
+app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "/frontend/build")));
+  app.use("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"));
+  });
+} else {
+  // Default Route
+  app.get("/api", (req, res) => {
+    res.status(201).json({ success: true, message: "Welcome Cloth Shop APP" });
+  });
+}
 
 // Error Handling Middleware
 app.use(errorHandler);
