@@ -9,7 +9,7 @@ export const listProduct =
       dispatch({ type: actions.PRODUCT_LIST_REQUEST });
 
       const { data } = await axios.get(
-        `http://localhost:5000/api/products?keyword=${keyword}&pageNumber=${pageNumber}`
+        `/api/products?keyword=${keyword}&pageNumber=${pageNumber}`
       );
 
       dispatch({ type: actions.PRODUCT_LIST_SUCCESS, payload: data });
@@ -29,9 +29,7 @@ export const listProductDetails = (id) => async (dispatch) => {
     dispatch({ type: actions.PRODUCT_DETAILS_RESET });
     dispatch({ type: actions.PRODUCT_DETAILS_REQUEST });
 
-    const { data } = await axios.get(
-      `http://localhost:5000/api/products/${id}`
-    );
+    const { data } = await axios.get(`/api/products/${id}`);
 
     dispatch({ type: actions.PRODUCT_DETAILS_SUCCESS, payload: data.product });
   } catch (error) {
@@ -60,7 +58,7 @@ export const deleteProduct = (id) => async (dispatch, getState) => {
       },
     };
 
-    await axios.delete(`http://localhost:5000/api/products/${id}`, config);
+    await axios.delete(`/api/products/${id}`, config);
 
     dispatch({ type: actions.PRODUCT_DELETE_SUCCESS });
   } catch (error) {
@@ -93,7 +91,7 @@ export const createProduct = (dataProduct) => async (dispatch, getState) => {
       },
     };
 
-    await axios.post(`http://localhost:5000/api/products`, dataProduct, config);
+    await axios.post(`/api/products`, dataProduct, config);
 
     dispatch({ type: actions.PRODUCT_CREATE_SUCCESS });
   } catch (error) {
@@ -126,11 +124,7 @@ export const updateProduct = (dataProduct) => async (dispatch, getState) => {
       },
     };
 
-    await axios.put(
-      `http://localhost:5000/api/products/${dataProduct._id}`,
-      dataProduct,
-      config
-    );
+    await axios.put(`/api/products/${dataProduct._id}`, dataProduct, config);
 
     dispatch({ type: actions.PRODUCT_UPDATE_SUCCESS });
     dispatch({ type: actions.PRODUCT_UPDATE_RESET });
@@ -165,11 +159,7 @@ export const createProductReview =
         },
       };
 
-      await axios.post(
-        `http://localhost:5000/api/products/${productId}/reviews`,
-        review,
-        config
-      );
+      await axios.post(`/api/products/${productId}/reviews`, review, config);
 
       dispatch({ type: actions.PRODUCT_CREATE_REVIEW_SUCCESS });
     } catch (error) {
@@ -191,7 +181,7 @@ export const listTopProducts = () => async (dispatch) => {
   try {
     dispatch({ type: actions.PRODUCT_TOP_REQUEST });
 
-    const { data } = await axios.get(`http://localhost:5000/api/products/top`);
+    const { data } = await axios.get(`/api/products/top`);
 
     dispatch({ type: actions.PRODUCT_TOP_SUCCESS, payload: data.products });
   } catch (error) {
