@@ -1,9 +1,6 @@
 {
   "name": "cloth-shop",
   "version": "1.0.0",
-  "engines": {
-    "node": "14.13.1"
-  },
   "description": "Online Clothing Store Full web project using the MERN stack",
   "main": "server.js",
   "type": "module",
